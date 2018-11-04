@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="会議室名前の変更"></title>
+    <style>
+        h1 { font-size:18pt; font-weight:bold; color:gray; }
+        td { padding:0px 20px; background:#eee;}
+    </style>
+</head>
+<body>
+	<h3>会議室名前の変更</h3>
+    <form th:action="@{'/meetingrooms/edit/'+${editMeetingRoom.roomId}}" method="post" th:object="${editMeetingRoom}">
+    <table border="1"  style="TABLE-LAYOUT: fixed; WORD-BREAK: break-all;">
+        <tr><td><label for="roomName">会議室名前</label></td>
+            <td><input type="text" name="roomName" th:field="*{roomName}" /></td></tr>
+        <tr><td></td><td><input type="submit" /></td></tr>
+    </table>
+    </form>
+    <form th:action="@{/meetingrooms}" method="post">
+        <button>戻る</button>
+    </form>
+	<form th:action="@{/logout}" method="post">
+		<button>ログアウト</button>
+	</form>
+</body>
+</html>

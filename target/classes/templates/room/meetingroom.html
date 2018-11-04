@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="会議室"></title>
+    <style>
+        h1 { font-size:18pt; font-weight:bold; color:gray; }
+    </style>
+</head>
+<body>
+	<h3>会議室</h3>
+    <p style="color: red" th:if="${error != null}" th:text="${error}"></p>
+    <form th:each="room: ${meetingrooms}" th:action="@{'/meetingrooms/' + ${room.roomId}}" method="post">
+    <table>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <td><span th:text="${room.roomName}"></span></td>
+        <td><button name="editroom" type="submit">編集</button></td>
+        <td><button name="deleteroom" type="submit">削除</button></td>
+        </tr>
+    </table>
+    </form>
+
+    <h3>予約一覧</h3>
+    <table>
+        <tr>
+            <th>会議室</th>
+            <th>日附</th>
+            <th>時間帯</th>
+            <th>予約者</th>
+        </tr>
+        <tr th:each="reservation : ${allreservations}">
+            <td>
+                <span th:text="${reservation.reservableRoom.meetingRoom.roomName}">豊洲</span>
+            </td>
+            <td>
+                <span th:text="${reservation.reservableRoom.reservableRoomId.reservedDate}">豊洲</span>
+            </td>
+            <td>
+                <span th:text="${reservation.startTime}" />
+                -
+                <span th:text="${reservation.endTime}" />
+            </td>
+            <td>
+                <span th:text="${reservation.user.lastName}" />
+                <span th:text="${reservation.user.firstName}" />
+            </td>
+        </tr>
+    </table>
+
+    <h3>会議室追加</h3>
+    <form th:action="@{'/meetingrooms/addnewmeetingroom'}" method="post" th:object="${newMeetingRoom}">
+        <table border="1"  style="TABLE-LAYOUT: fixed; WORD-BREAK: break-all;">
+            <tr><td><label for="roomName">新規会議室名前</label></td>
+                <td><input type="text" name="roomName" th:field="*{roomName}" /></td>
+                <td><button type="submit">登録</button></td></tr>
+        </table>
+    </form>
+	<form th:action="@{/rooms}" method="get">
+		<button>戻る</button>
+	</form>
+</body>
+</html>
